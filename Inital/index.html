@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+		<style is="custom-style">
+     		/* Define a document-wide default—will not override a :host rule in icon-toggle-demo */
+			:root {
+				--icon-toggle-outline-color: red;
+			}
+			/* Override the value specified in icon-toggle-demo */
+			icon-toggle-demo {
+				--icon-toggle-pressed-color: blue;
+			}
+			/* This rule does not work! */
+			body {
+				--icon-toggle-color: purple;
+			}
+		</style>
+
+		<link rel="import" href="components/icon-toggle-demo.html">
+	</head>
+	<body>
+		<icon-toggle-demo></icon-toggle-demo>
+	</body>
+</html>

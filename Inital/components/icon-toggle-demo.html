@@ -1,0 +1,43 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="./icon-toggle.html">
+
+
+<dom-module id="icon-toggle-demo">
+	<template>
+		<style>
+			:host {
+				display: block;
+				--icon-toggle-color: lightgrey;
+				--icon-toggle-outline-color: black;
+				--icon-toggle-pressed-color: red;
+			}
+
+			icon-toggle {
+			}
+		</style>
+
+		<h3>Statically configured icon toggles</h3>
+		<icon-toggle icon = "star" pressed></icon-toggle>
+		<icon-toggle icon = "star"></icon-toggle>
+
+		<h3>Data Binded icon toggles</h3>
+		<div>
+			[[message(isFav)]]
+		</div>
+		<icon-toggle icon="favorite" pressed="{{isFav}}"></icon-toggle>
+	</template>
+	<script>
+		Polymer({
+			is: 'icon-toggle-demo',
+
+			message : function(fav){
+				if(!fav){
+					return "Do You Like Me ??";
+				}
+				else {
+					return "You really Like me !! :)";
+				}
+			}
+		});
+	</script>
+</dom-module>

@@ -19,6 +19,11 @@
 				align-items: flex-start;
 				padding: 10px 25px;
 			}
+			paper-listbox paper-item.self{
+				flex-direction: column;
+				align-items: flex-end;
+				padding: 10px 25px;
+			}
 			paper-listbox paper-item h4{
 				display: block;
 				margin: 0;
@@ -33,7 +38,7 @@
 		</style>
 		<paper-listbox attr-for-selected="selected">
 			<template is="dom-repeat" items="{{messages}}">
-					<paper-item>
+					<paper-item class$=[[getClass(item.sender)]]>
 						<paper-item-title>
 							<h4>{{item.sender}}</h4>
 						</paper-item-title>
@@ -49,9 +54,20 @@
 		Polymer({
 			is: 'chat-thread',
 			properties: {
+				user : {
+					type: String,
+				},
 				messages : {
 					type : Array,
 					notify : true
+				}
+			},
+			getClass : function(sender) {
+				if(this.user === sender){
+					return "self";
+				}
+				else{
+					return "";
 				}
 			}
 		});

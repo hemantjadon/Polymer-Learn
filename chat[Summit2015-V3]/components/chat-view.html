@@ -15,8 +15,8 @@
 		</style>
 		
 		<input-header label={{thread.label}}></input-header>
-		<chat-thread messages={{thread.messages}}></chat-thread>
-		<message-input user=[[user]] thread=[[thread.id]]></message-input>
+		<chat-thread user=[[user]] messages={{thread.messages}}></chat-thread>
+		<message-input user=[[user]] thread={{thread}}></message-input>
 	</template>
 	<script>
 		Polymer({

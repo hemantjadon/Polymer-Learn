@@ -44,23 +44,19 @@
 					type : String,
 					notify : true
 				},
-				message : {
+				thread : {
 					type : Object,
-					notify : true,
-					value : {
-						text: "",
-						sender: "Hemant Jadon"
-					}
-				}
+					notify : true
+				},
 			},
 
 			_postMessage : function(evt){
 				if (evt.keyCode == 13) {
-					console.log(this.push);
 					this.push('thread.messages',{
 						text: evt.target.value,
 						sender: "Hemant Jadon"
 					});
+					evt.target.value="";
 				}
 			}
 		});

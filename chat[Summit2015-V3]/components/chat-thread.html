@@ -1,0 +1,59 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+
+
+<dom-module id="chat-thread">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			paper-listbox{
+				padding: 0px;
+			}
+			paper-listbox paper-item{
+				flex-direction: column;
+				align-items: flex-start;
+				padding: 10px 25px;
+			}
+			paper-listbox paper-item h4{
+				display: block;
+				margin: 0;
+				padding: 0px 0px;
+			}
+			paper-listbox paper-item p{
+				display: block;
+				margin: 0;
+				color: #6a6a6a;
+				font-size: 0.85em;
+			}
+		</style>
+		<paper-listbox attr-for-selected="selected">
+			<template is="dom-repeat" items="{{messages}}">
+					<paper-item>
+						<paper-item-title>
+							<h4>{{item.sender}}</h4>
+						</paper-item-title>
+						<paper-item-body>
+							<p>{{item.text}}</p>
+						</paper-item-body>
+					</paper-item>
+			</template>
+		</paper-listbox>
+		
+	</template>
+	<script>
+		Polymer({
+			is: 'chat-thread',
+			properties: {
+				messages : {
+					type : Array,
+					notify : true
+				}
+			}
+		});
+	</script>
+</dom-module>

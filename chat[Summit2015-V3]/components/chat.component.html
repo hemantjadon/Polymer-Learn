@@ -1,0 +1,88 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="./chat-view.html">
+
+
+<dom-module id="polymer-chat">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<chat-view thread={{selectedThread}} user="[[user]]"></chat-view>
+	</template>
+	<script>
+		var db = {
+			"threads": [
+				{
+				"id": 1,
+				"label": "Polymer Summit",
+				"messages": [
+					{
+					"id": 1,
+					"sender": "Hemant Jadon",
+					"text": "Learning Polymer"
+					},
+					{
+					"id": 2,
+					"sender": "Varun Agarwal",
+					"text": "Nice !!"
+					},
+					{
+					"id": 3,
+					"sender": "Kushagra Sahu",
+					"text": "I am doing Angular2"
+					}
+				]
+				},
+				{
+				"id": 2,
+				"label": "Feedback Project",
+				"messages": [
+					{
+					"id": 1,
+					"sender": "Hemant Jadon",
+					"text": "We have to start the project."
+					},
+					{
+					"id": 2,
+					"sender": "Savil Mittal",
+					"text": "Placement !!!!!!"
+					},
+					{
+					"id": 3,
+					"sender": "Varun Agarwal",
+					"text": "Bhai mei nahi kar paunga : busy hun bahut."
+					},
+					{
+					"id": 4,
+					"sender": "Kushagra Sahu",
+					"text": "OK i will start it."
+					}
+				]
+				}
+			]
+		}
+		
+		Polymer({
+			is: 'polymer-chat',
+			properties : {
+				user : {
+					type : String,
+					value : "Hemant Jadon",
+				},
+				threads : {
+					type : Array,
+					value : this.db.threads,
+					notify : true
+				},
+				selectedThread : {
+					type : Object,
+					value : this.db.threads[0],
+					notify : true
+				}
+			}
+		});
+	</script>
+</dom-module>

@@ -1,0 +1,35 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="./input-header.html">
+<link rel="import" href="./chat-thread.html">
+<link rel="import" href="./message-input.html">
+
+
+<dom-module id="chat-view">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			
+		</style>
+		
+		<input-header label={{thread.label}}></input-header>
+		<chat-thread messages={{thread.messages}}></chat-thread>
+		<message-input user=[[user]] thread=[[thread.id]]></message-input>
+	</template>
+	<script>
+		Polymer({
+			is: 'chat-view',
+			properties : {
+				thread : {
+					type : Object,
+					notify : true,
+				},
+				user : {
+					type : String,
+				}
+			},
+		});
+	</script>
+</dom-module>

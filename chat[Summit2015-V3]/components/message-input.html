@@ -1,0 +1,68 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../bower_components/iron-input/iron-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-char-counter.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+
+
+<dom-module id="message-input">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			paper-input-container{
+				margin: 0px 25px;
+				--paper-input-container-focus-color	: var(--chat-theme-color,#00bcd4);
+			}
+			paper-input-container paper-fab{
+				--paper-fab-background: var(--chat-theme-color,#00bcd4);
+				--paper-fab-iron-icon: {
+					width : 20px;
+				};
+				margin: 5px 10px;
+			}
+		</style>
+		<paper-input-container>
+			<label>Say Something .. </label>
+			<input is="iron-input" on-keyup="_postMessage">
+			<paper-fab mini suffix icon="send"></paper-fab>
+		</paper-input-container>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'message-input',
+
+			properties : {
+				user : {
+					type : String,
+					notify : true
+				},
+				message : {
+					type : Object,
+					notify : true,
+					value : {
+						text: "",
+						sender: "Hemant Jadon"
+					}
+				}
+			},
+
+			_postMessage : function(evt){
+				if (evt.keyCode == 13) {
+					console.log(this.push);
+					this.push('thread.messages',{
+						text: evt.target.value,
+						sender: "Hemant Jadon"
+					});
+				}
+			}
+		});
+	</script>
+</dom-module>

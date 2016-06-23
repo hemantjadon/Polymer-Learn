@@ -1,0 +1,53 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="./thread-header.html">
+<link rel="import" href="./thread-list.html">
+<link rel="import" href="./new-thread.html">
+
+<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+
+
+<dom-module id="thread-view">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			div.fullbleed{
+				height: 100vh;
+				overflow: hidden;
+				position: relative;
+			}
+			div.fullbleed new-thread{
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 30%;
+			}
+		</style>
+		<div class="fullbleed layout vertical">
+			<paper-header-panel mode="seamed" class="flex">
+				<thread-header class="paper-header"></thread-header>
+				<div class="fit">
+					<thread-list threads={{threads}} selected-thread={{selectedThread}}></thread-list>
+				</div>
+			</paper-header-panel>
+			<new-thread threads={{threads}}></new-thread>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'thread-view',
+			properties : {
+				threads : {
+					type : Array,
+					notify : true,
+				},
+				selectedThread : {
+					type : Object,
+					notify : true,
+				}
+			}
+		});
+	</script>
+</dom-module>

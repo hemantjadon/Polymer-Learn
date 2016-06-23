@@ -54,6 +54,7 @@
 					notify : true
 				},
 			},
+
 			_postMessage : function(evt){
 				if(evt.type === "tap"){
 					let input = this.querySelectorAll("div#labelAndInputContainer input")[0];
@@ -79,7 +80,7 @@
 					});
 					evt.target.bindValue="";
 				}
-			}
+			},
 		});
 	</script>
 </dom-module>

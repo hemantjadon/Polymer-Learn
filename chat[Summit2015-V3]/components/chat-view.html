@@ -4,6 +4,8 @@
 <link rel="import" href="./chat-thread.html">
 <link rel="import" href="./message-input.html">
 
+<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+
 
 <dom-module id="chat-view">
 	<template>
@@ -11,15 +13,36 @@
 			:host {
 				display: block;
 			}
+			div.fullbleed{
+				height: 1000vh;
+				position: relative;
+			}
+			div.fullbleed message-input{
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				background-color: white;
+			}
+			div.fit{
+				height: 80vh;
+				overflow: scroll;
+			}
 		</style>
-		
-		<input-header label={{thread.label}}></input-header>
-		<chat-thread user=[[user]] messages={{thread.messages}}></chat-thread>
-		<message-input user=[[user]] thread={{thread}}></message-input>
+		<div class="fullbleed layout vertical">
+			<paper-header-panel mode="seamed">
+				<input-header label={{thread.label}} class="paper-header"></input-header>
+				<div class="fit">
+					<chat-thread user=[[user]] messages={{thread.messages}}></chat-thread>
+				</div>
+			</paper-header-panel>
+			<message-input user=[[user]] thread={{thread}}></message-input>
+		</div>
 	</template>
 	<script>
 		Polymer({
 			is: 'chat-view',
+			
 			properties : {
 				thread : {
 					type : Object,
@@ -29,6 +52,22 @@
 					type : String,
 				}
 			},
+
+			observers : [
+				"_threadMessageObserver(thread.messages.*)",
+				"_threadLabelObserver(thread.label)"
+			],
+			_threadLabelObserver : function (){
+				console.log("p");
+			},
+			_threadMessageObserver : function (){
+				let list_node = this.querySelectorAll("div.fullbleed paper-header-panel div.fit")[0];
+
+				// HACK : Not a good way to do do this but it works.
+				setTimeout(function(){
+					list_node.scrollTop = list_node.scrollHeight - list_node.offsetHeight;
+				},0);
+			}
 		});
 	</script>
 </dom-module>

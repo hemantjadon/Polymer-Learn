@@ -1,6 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 <link rel="import" href="./chat-view.html">
+<link rel="import" href="./thread-view.html">
+
+
+<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
 
 
 <dom-module id="polymer-chat">
@@ -9,8 +13,19 @@
 			:host {
 				display: block;
 			}
+			thread-view{
+				display: block;
+			}
+			chat-view{
+				display: block;
+			}
+			
 		</style>
-		<chat-view thread={{selectedThread}} user="[[user]]"></chat-view>
+		<paper-drawer-panel drawer-width="300px">
+			<thread-view drawer threads={{threads}} selected-thread={{selectedThread}}></thread-view>
+			<!--<div drawer>{{selectedThread.messages}}</div>-->
+			<chat-view main thread={{selectedThread}} user=[[user]]></chat-view> 
+		</paper-drawer-panel>
 	</template>
 	<script>
 		var db = {

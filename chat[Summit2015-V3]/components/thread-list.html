@@ -49,15 +49,16 @@
 		</style>
 		<paper-listbox attr-for-selected="selected">
 			<template is="dom-repeat" items="{{threads}}">
-				<paper-item class$=[[getClass(item)]] on-click="handleClick">
+				<paper-item class$=[[getClass(index)]] on-click="handleClick">
 					<paper-item-title>
 						<h4>{{item.label}}</h4>
 					</paper-item-title>
 					<paper-item-body>
-						<p><strong>{{lastMessageSender(item.messages)}}</strong>{{lastMessageText(item.messages)}}</p>
+						<p><strong>{{lastMessageSender(item.messages.*)}}</strong>{{lastMessageText(item.messages.*)}}</p>
 					</paper-item-body>
 				</paper-item>
 			</template>
+			<!--{{computeMessages(threads.0.messages.*)}}-->
 		</paper-listbox>
 
 	</template>
@@ -70,38 +71,46 @@
 					type : Array,
 					notify : true,
 				},
-				selectedThread : {
-					type : Object,
+				selectedIndex : {
+					type : Number,
 					notify : true,
 				}
 			},
-			lastMessageText : function (messages) {
-				if(!messages || messages.length === 0){
-					return "";
-				}
-				return `${messages[messages.length-1].text}`;
+			computeMessages : function(changeRecord){
+				console.log(changeRecord);
+				return changeRecord.base;
 			},
-			lastMessageSender : function (messages) {
-				if(!messages || messages.length === 0){
+			lastMessageText : function (changeRecord) {
+				if(!changeRecord || changeRecord.base.length === 0){
 					return "";
 				}
-				return `${messages[messages.length-1].sender} : `;
+				return `${changeRecord.base[changeRecord.base.length-1].text}`;
+			},
+			lastMessageSender : function (changeRecord) {
+				if(!changeRecord || changeRecord.base.length === 0){
+					return "";
+				}
+				console.log(changeRecord);
+				return `${changeRecord.base[changeRecord.base.length-1].sender}`;
 			},
 
-			getClass : function(thread){
-				if(thread === this.selectedThread){
+			getClass : function(threadIndex){
+				if(threadIndex === this.selectedIndex){
 					return "selected";
 				}
 			},
 
 			handleClick : function (evt) {
-				if(this.selectedThread === evt.model.item){
+				if(this.selectedIndex === evt.model.index){
 					return;
 				}
-				this.selectedThread = evt.model.item;
-
-				this.querySelectorAll("paper-listbox paper-item.selected")[0].classList.remove("selected");
-				evt.target.classList.add("selected")
+				this.selectedIndex = evt.model.index;
+				
+				let threads = this.querySelectorAll("paper-listbox paper-item");
+				threads.forEach((thread) => {
+					thread.classList.remove("selected");
+				});
+				evt.target.classList.add("selected");
 			}
 		});
 	</script>

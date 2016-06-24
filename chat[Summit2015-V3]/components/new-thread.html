@@ -1,0 +1,51 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
+
+<dom-module id="new-thread">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			paper-menu-button paper-input{
+				padding: 0px 20px;
+				--paper-input-container-color : var(--chat-theme-color,#00bcd4);
+				--paper-input-container-focus-color : var(--chat-theme-color,#00bcd4)
+			}
+		</style>
+		<paper-menu-button id="add" vertical-align="bottom" vertical-offset=50 horizontal-offset=10 horizontal-align="left">
+			<paper-icon-button icon="add" class="dropdown-trigger"></paper-icon-button>
+			<paper-input auto-validate label="New Thread" class="dropdown-content" on-keyup="_createThread"></paper-input>
+		</paper-menu-button>
+		<paper-tooltip for="add" position="right">Create new thread</paper-tooltip>
+	</template>
+	<script>
+
+		Polymer({
+			is: 'new-thread',
+
+			properties : {
+				threads : {
+					type : Object,
+					notify : true
+				}
+			},
+			_createThread : function(evt){
+				if(evt.type === "keyup" && evt.keyCode === 13){
+					if(evt.target.bindValue === ""){
+						return;
+					}
+					this.push('threads',{
+						label: evt.target.value,
+						messages: [],
+					});
+					evt.target.bindValue = "";
+				}
+			},
+		});
+
+	</script>
+</dom-module>

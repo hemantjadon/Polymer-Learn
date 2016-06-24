@@ -1,0 +1,129 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="./chat-view.html">
+<link rel="import" href="./thread-view.html">
+
+
+<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+
+
+<dom-module id="polymer-chat">
+	<template>
+		<style>
+			:host {
+				display: block;
+				--chat-theme-color: #00bcd4;
+			}
+			thread-view{
+				display: block;
+			}
+			chat-view{
+				display: block;
+			}
+			
+		</style>
+		<paper-drawer-panel drawer-width="300px">
+			<thread-view drawer threads={{threads}} selected-index={{selectedIndex}}></thread-view>
+			<!--<div drawer><div>{{computeMessages(selectedThread.messages.*)}}</div></div>-->
+			<chat-view main thread={{selectedThread}} user=[[user]]></chat-view> 
+		</paper-drawer-panel>
+	</template>
+	<script>
+		var db = {
+			"threads": [
+				{
+				"id": 1,
+				"label": "Polymer Summit",
+				"messages": [
+					{
+					"id": 1,
+					"sender": "Hemant Jadon",
+					"text": "Learning Polymer"
+					},
+					{
+					"id": 2,
+					"sender": "Varun Agarwal",
+					"text": "Nice !!"
+					},
+					{
+					"id": 3,
+					"sender": "Kushagra Sahu",
+					"text": "I am doing Angular2"
+					}
+				]
+				},
+				{
+				"id": 2,
+				"label": "Feedback Project",
+				"messages": [
+					{
+					"id": 1,
+					"sender": "Hemant Jadon",
+					"text": "We have to start the project."
+					},
+					{
+					"id": 2,
+					"sender": "Savil Mittal",
+					"text": "Placement !!!!!!"
+					},
+					{
+					"id": 3,
+					"sender": "Varun Agarwal",
+					"text": "Bhai mei nahi kar paunga : busy hun bahut."
+					},
+					{
+					"id": 4,
+					"sender": "Kushagra Sahu",
+					"text": "OK i will start it."
+					}
+				]
+				}
+			]
+		}
+		
+		Polymer({
+			is: 'polymer-chat',
+			properties : {
+				user : {
+					type : String,
+					value : "Hemant Jadon",
+				},
+				threads : {
+					type : Array,
+					value : this.db.threads,
+					notify : true
+				},
+				selectedIndex : {
+					type : Number,
+					notify : true,
+					value : 0,
+				},
+				selectedThread : {
+					type : Object,
+					notify : true,
+					computed : "getSelectedThread(threads,selectedIndex)"
+				}
+			},
+
+			getSelectedThread : function (threads,selectedIndex) {
+				return threads[selectedIndex];
+			},
+			computeMessages: function(changeRecord){
+				return changeRecord.base;
+			},
+			observers : [
+				"selectedThreadLabelChanged(selectedThread.label)",
+				"selectedThreadUpdated(selectedThread.messages.*)"
+			],
+
+			selectedThreadLabelChanged : function (label) {
+				this.set(`threads.${this.selectedIndex}.label`,label);
+			},
+			selectedThreadUpdated : function(changeRecord){
+				console.log(changeRecord);
+				console.log(this.threads[0].messages);
+				this.set(`threads.${this.selectedIndex}.messages`,changeRecord.base);
+			}
+		});
+	</script>
+</dom-module>

@@ -1,0 +1,63 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+<dom-module id="input-header">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			paper-toolbar{
+				--paper-toolbar-background : var(--chat-theme-color,#00bcd4);
+			}
+
+			paper-toolbar div.label-group{
+				display: flex;
+				justify-content: space-between;
+			}
+
+			paper-toolbar div.label-group span.chat-label{
+				padding-top: 9px;
+				font-size: 1.2em;
+			}
+			paper-toolbar paper-menu-button{
+				padding: initial 0px;
+			}
+			paper-toolbar paper-menu-button paper-input{
+				padding: 5px 20px;
+				--paper-input-container-color : var(--chat-theme-color,#00bcd4);
+				--paper-input-container-focus-color : var(--chat-theme-color,#00bcd4)
+			}
+		</style>
+		
+		<paper-toolbar justify="justified">
+			<div class="label-group">
+				<paper-icon-button icon="mail"></paper-icon-button>&nbsp;&nbsp;
+				<span class="chat-label">{{ label }}</span>
+			</div>
+			<paper-menu-button vertical-align="top" vertical-offset=50 horizontal-align="right">
+				<paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+				<paper-input label= "Thread Name" value={{label}} class="dropdown-content"></paper-input>
+			</paper-menu-button>
+
+		</paper-toolbar>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'input-header',
+
+			properties : {
+				label : {
+					type : String,
+					notify : true,
+				}
+			}
+		});
+	</script>
+</dom-module>

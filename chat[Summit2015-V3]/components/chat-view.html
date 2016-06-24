@@ -1,0 +1,72 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="./input-header.html">
+<link rel="import" href="./chat-thread.html">
+<link rel="import" href="./message-input.html">
+
+<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+
+
+<dom-module id="chat-view">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			div.fullbleed{
+				height: 100vh;
+				position: relative;
+			}
+			div.fullbleed message-input{
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				background-color: white;
+			}
+			div.fit{
+				height: 80vh;
+				overflow: scroll;
+			}
+		</style>
+		<div class="fullbleed layout vertical">
+			<paper-header-panel mode="seamed">
+				<input-header label={{thread.label}} class="paper-header"></input-header>
+				<div class="fit">
+					[[thread.label]]
+					<chat-thread user=[[user]] messages={{thread.messages}}></chat-thread>
+				</div>
+			</paper-header-panel>
+			<message-input user=[[user]] thread={{thread}}></message-input>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'chat-view',
+			
+			properties : {
+				thread : {
+					type : Object,
+					notify : true,
+				},
+				user : {
+					type : String,
+				},
+			},
+			
+			observers : [
+				"_threadMessageObserver(thread.messages.*)"
+			],
+	
+			_threadMessageObserver : function (changeRecord){
+				this.notifyPath('thread',this.thread);
+				let list_node = this.querySelectorAll("div.fullbleed paper-header-panel div.fit")[0];
+
+				// HACK : Not a good way to do do this but it works.
+				setTimeout(function(){
+					list_node.scrollTop = list_node.scrollHeight - list_node.offsetHeight;
+				},0);
+			}
+		});
+	</script>
+</dom-module>

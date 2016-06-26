@@ -49,7 +49,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 			<paper-menu-button horizontal-align="right" vertical-offset=50>
 				<paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
 				<div class="dropdown-content">
-					<paper-input label="Todo Title" value={{label}}></paper-input>
+					<paper-input label="Todo Title" value={{label}} on-keyup="propogateLabelChange"></paper-input>
 				</div>
 			</paper-menu-button>
 
@@ -64,15 +64,15 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 			is: 'todo-view-header',
 
 			properties: {
-
+				label : {
+					type : String,
+					notify : true
+				}
 			},
 
-			// computeLabel : function(changeRecord,selectedIndex){
-			// 	return changeRecord.base[selectedIndex].label;
-			// },
-			// changeLabel : function(evt){
-			// 	this.set(`todos.${this.selectedIndex}.label`,evt.target.value);
-			// }
+			propogateLabelChange : function (evt){
+				this.fire('todo-changed',{"label": this.label});
+			}
 		});
 	})();
 	</script>

@@ -1,0 +1,106 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!---
+@license
+Copyright (c) 2016 Hemant Jadon. All rights reserved.
+-->
+
+<!-- Polymer and PolymerElements -->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<!-- Custom Web Components -->
+
+
+
+<dom-module id="todo-list-view-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-listbox{
+        padding: 0;
+      }
+      paper-listbox paper-item{
+        --paper-item-focused:{
+          background : none;
+        };
+        --paper-item-focused-before: {
+          background : none;
+        };
+      }
+      
+      paper-listbox paper-item.selected{
+        background: var(--selected-todo-background,#fce4ec);
+        font-weight: 400;
+      }
+
+    </style>
+    <paper-listbox>
+      
+      <template is="dom-repeat" items={{computeTodos(todos.*)}} as="todo">
+       
+        <paper-item class$={{__getPaperItemClass(index)}} on-tap="handleTap">
+          {{todo.label}}
+        </paper-item>
+
+      </template>
+
+    </paper-listbox>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'todo-list-view-list',
+
+      properties: {
+        selectedIndex : {
+          type : Number,
+          value : 0,
+          notify : true
+        }
+      },
+
+      computeTodos : function(changeRecord){
+        return changeRecord.base;
+      },
+
+      __getPaperItemClass : function(index){
+        if(index === this.selectedIndex){
+          return "selected";
+        } else {
+          return "";
+        }
+      },
+
+      handleTap : function(evt){
+        if (evt.model.index === this.selectedIndex){
+          return;
+        }
+        else{
+          this.selectedIndex = evt.model.index;
+          
+          let items = this.querySelectorAll("paper-listbox paper-item");
+          items.forEach((item)=>{
+            item.classList.remove("selected");
+          });
+
+          evt.target.classList.add("selected");
+        }
+      }
+    });
+  })();
+  </script>
+</dom-module>

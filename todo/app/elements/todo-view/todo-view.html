@@ -30,10 +30,10 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       }
     </style>
 
-    <paper-header-panel>
+    <paper-header-panel mode="seamed">
       <todo-view-header class="paper-header" label={{todo.label}}></todo-view-header>
       <div class="fit">
-        Main
+        {{todo.label}}
       </div>
     </paper-header-panel>
 
@@ -46,8 +46,12 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       is: 'todo-view',
 
       properties: {
-        
-      }
+        todo : {
+          type : Object,
+          notify : true
+        }
+      },
+
     });
   })();
   </script>

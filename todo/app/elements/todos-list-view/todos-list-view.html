@@ -42,7 +42,9 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         <div class="title">Todos</div>
       </paper-toolbar>
       <div class="fit">
-        <todo-list-view-list todos={{todos}} selected-index={{selectedIndex}}></todo-list-view-list>
+        {{computeLabel(todos.*,selectedIndex)}}<br>
+        {{todos.0.label}}
+        <todo-list-view-list todos={{computeTodos(todos.*)}} selected-index={{selectedIndex}}></todo-list-view-list>
       </div>
     </paper-header-panel>
 
@@ -60,6 +62,20 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
           value : 0,
           notify : true
         }
+      },
+      computeTodos : function(changeRecord){
+        return changeRecord.base;
+      },
+
+      listeners : {
+        "todo-changed" : "todoChange",
+      },
+      todoChange : function (evt,label) {
+        this.notifyPath(`todos.${selectedIndex}.label`,"Hemant")
+        this.set(`todos.${selectedIndex}.label`,label.label)
+      },
+      computeLabel : function (todos,index){
+        return this.todos[index].label;
       }
     });
   })();

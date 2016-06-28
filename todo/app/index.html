@@ -62,13 +62,26 @@ Copyright (c) 2015 Hemant Jadon. All rights reserved.
 
   <!-- For shared styles, shared-styles.html import in elements.html -->
   <style is="custom-style" include="shared-styles"></style>
+
+  <!-- Firebase Script -->
+  
+  <!--<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>-->
 </head>
 
 <body unresolved>
   <!-- build:remove -->
   <span id="browser-sync-binding"></span>
   <!-- endbuild -->
-
+  <script>
+    // Initialize Firebase
+    // var config = {
+    //   apiKey: "AIzaSyAW5zGDTcCzFMveybUJlVHugyOE2zH9dLM",
+    //   authDomain: "todo-app-bc14c.firebaseapp.com",
+    //   databaseURL: "https://todo-app-bc14c.firebaseio.com",
+    //   storageBucket: "todo-app-bc14c.appspot.com",
+    // };
+    // firebase.initializeApp(config);
+  </script>
   <template is="dom-bind" id="app">
 
     <todo-app></todo-app>

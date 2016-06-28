@@ -22,6 +22,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 <link rel="import" href="../todo-view-header/todo-view-header.html">
 <link rel="import" href="../todo-view-list/todo-view-list.html">
 <link rel="import" href="../todo-view-add/todo-view-add.html">
+<link rel="import" href="../todo-view-no-todo/todo-view-no-todo.html">
 
 
 <dom-module id="todo-view">
@@ -36,14 +37,20 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       }
     </style>
 
-    <paper-header-panel mode="seamed">
-      <todo-view-header class="paper-header" label={{todo.label}}></todo-view-header>
-      <div class="fit">
-        <todo-view-list todo={{todo}}></todo-view-list>
-        <todo-view-add></todo-view-add>
-      </div>
-    </paper-header-panel>
-
+    <template is="dom-if" if={{todoExists(todo)}}>
+      <paper-header-panel mode="seamed">
+        <todo-view-header class="paper-header" label={{todo.label}}></todo-view-header>
+        <div class="fit">
+          <todo-view-list todo={{todo}}></todo-view-list>
+          <todo-view-add></todo-view-add>
+        </div>
+      </paper-header-panel>
+    </template>
+    <template is="dom-if" if={{!todoExists(todo)}}>
+      <paper-header-panel mode="seamed">
+        <todo-view-no-todo></todo-view-no-todo>
+      </paper-header-panel>
+    </template>
   </template>
   <script>
   (function() {
@@ -62,6 +69,15 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       listeners : {
         "delete-todo-element" : "deleteTodoItem",
         "add-todo-element" : "addTodoItem",
+      },
+
+      todoExists : function(todo){
+        if(todo.__type === "notodo"){
+          return false;
+        }
+        else {
+          return true;
+        }
       },
 
       deleteTodoItem : function (evt,item) {

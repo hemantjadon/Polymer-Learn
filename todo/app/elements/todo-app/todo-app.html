@@ -70,6 +70,9 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 				if(this.todos.length) {
 					selector.select(this.todos[index]);
 				}
+				else {
+					this.selectedTodo = {__type : "notodo", label : "" , items : []};
+				}
 			},
 		});
 	})();

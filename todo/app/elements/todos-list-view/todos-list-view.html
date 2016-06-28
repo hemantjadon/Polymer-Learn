@@ -48,7 +48,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         <div class="title">Todos</div>
       </paper-toolbar>
       <div class="fit">
-        <todo-list-view-list todos={{todos}} selected-todo={{selectedTodo}}></todo-list-view-list>
+        <todo-list-view-list id="list" todos={{todos}} selected-todo={{selectedTodo}}></todo-list-view-list>
       </div>
       <todo-list-view-add-new todos={{todos}}></todo-list-view-add-new>
     </paper-header-panel>
@@ -67,9 +67,15 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
           notify : true
         }
       },
-      computeTodos : function(changeRecord){
-        return changeRecord.base;
+
+      listeners : {
+        "add-todo" : "addTodo"
       },
+
+      addTodo : function (evt,item) {
+        this.push(`todos`, item);
+        this.$.list.$.selector.select(this.todos[this.todos.length-1]);
+      }
 
     });
   })();

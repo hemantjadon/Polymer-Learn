@@ -63,14 +63,13 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         if(evt.type === "keyup" && evt.keyCode === 13){
           if(evt.target.value === "") { return; }
 
-          this.push(`todos`,{
+          this.fire(`add-todo`,{
             label : evt.target.value,
             isComplete : false,
             items : []
           });
 
           evt.target.bindValue = "";
-
         }
       }
     });

@@ -88,6 +88,10 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         this._selectedIndex = 0;
       },
       _selectedIndexChanged : function(index){
+        if(this.todos.length === 0){
+          this.selectedTodo = {__type : "notodo", label : "" , items : []};
+          return;
+        }
         this.$.selector.select(this.todos[index]);
       },
 

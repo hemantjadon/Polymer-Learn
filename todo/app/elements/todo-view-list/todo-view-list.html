@@ -44,9 +44,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         display: inline;
         font-size: 2em;
       }
-      div.container div.inner-container div.label div.hidden{
-        display: none;
-      }
+      
       @media(min-width:900px){
         .show-on-mobile{
           display: none;
@@ -65,21 +63,8 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
     <div class="container">
       <div class="inner-container">
         <div class="label">
-          <div class$={{__noTodoHiddenClass(todo.items.*)}}>
-            No More Todos! <br class="show-on-mobile"/> You're all caught up
-          </div>
-          <div class$={{__completeTodoHiddenClass(todo.items.*)}}>
-            You're all caught up
-          </div>
-          <div class$={{__noTodoCompleteHiddenClass(todo.items.*)}}>
-            You have some work to do <br class="show-on-mobile" />
-          </div>
-          <div class$={{__incompleteTodoHiddenClass(todo.items.*)}}>
-            (
-            <span class="completed">{{completedArrayLength(todo.items.*)}}</span>
-            /
-            <span class="all">{{arrayLength(todo.items.*)}}</span>
-            )
+          <div>
+            {{computeLabel(todo.items.*)}}
           </div>
         </div>
         <div class="delete-button">
@@ -123,38 +108,20 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         this.fire("delete-todo",this.todo);
       },
 
-      // Class Getting Methods.
-      __noTodoHiddenClass : function(changeRecord){
-        if(changeRecord.base.length){
-          return "hidden";
+      computeLabel : function(changeRecord){
+        if(changeRecord.base.length === 0){
+          return "No todos left! You're all caught up";
         }
-      },
-      __completeTodoHiddenClass : function(changeRecord){
-        if(!changeRecord.base.length){
-          return "hidden";
+        else if(this.completedArrayLength(changeRecord) === this.arrayLength(changeRecord)){
+          return "You're all caught up!";
         }
-        else if(this.completedArrayLength(changeRecord) !== changeRecord.base.length){
-          return "hidden";
-        }
-      },
-      __incompleteTodoHiddenClass : function(changeRecord){
-        if(!changeRecord.base.length){
-          return "hidden";
-        }
-        else if(this.completedArrayLength(changeRecord) === 0){
-          return "hidden"
-        }
-        else if(this.completedArrayLength(changeRecord) === changeRecord.base.length){
-          console.log(this.completedArrayLength(changeRecord),changeRecord.base.length) ;
-          return "hidden";
-        }
-      },
-      __noTodoCompleteHiddenClass : function(changeRecord){
-        if(!changeRecord.base.length){
-          return "hidden";
-        }
-        else if(this.completedArrayLength(changeRecord)){
-          // return "hidden";
+        else{
+          if (this.completedArrayLength(changeRecord) === 0){
+            return "You have some work to do"
+          }
+          else{
+            return `You have some work to do (${this.completedArrayLength(changeRecord)}/${this.arrayLength(changeRecord)})`;
+          }
         }
       },
     });

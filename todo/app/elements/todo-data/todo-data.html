@@ -16,63 +16,63 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="todo-data">
-	<script>
-	(function() {
-		'use strict';
+  <script>
+  (function() {
+    'use strict';
 
-		Polymer({
-			is: 'todo-data',
+    Polymer({
+      is: 'todo-data',
 
-			properties: {
-				todos : {
-					notify : true,
-					value : function(){
-						return [
-							{
-								"label" : "Learning Polymer",
-								"isComplete" : false,
-								"items" : [
-									{
-										"text" : "Start with Polymer Starter Kit",
-										"isComplete" : true,
-									},
-									{
-										"text" : "Learn about elements",
-										"isComplete" : false,
-									},
-									{
-										"text" : "Understand Data Bindings",
-										"isComplete" : false,
-									},
-									{
-										"text" : "Learn about Polymers event driving system",
-										"isComplete" : false
-									}
-								]
-							},
-							{
-								"label" : "CBCS - based feedback system",
-								"isComplete" : false,
-								"items" : [
-									{
-										"text" : "Start writing models",
-										"isComplete" : false, 
-									},
-									{
-										"text" : "Use decorators to assign the tasks",
-										"isComplete" : false,
-									},
-									{
-										"text" : "Use inline models to wire up the teachers and students.",
-										"isComplete" : false,
-									}
-								]
-							}
-						]
-					}
-				}
-			},
-		});
-	})();
-	</script>
+      properties: {
+        todos : {
+          notify : true,
+          value : function(){
+            return [
+              {
+                "label" : "Learning Polymer",
+                "isComplete" : false,
+                "items" : [
+                  {
+                    "text" : "Start with Polymer Starter Kit",
+                    "isComplete" : true,
+                  },
+                  {
+                    "text" : "Learn about elements",
+                    "isComplete" : false,
+                  },
+                  {
+                    "text" : "Understand Data Bindings",
+                    "isComplete" : false,
+                  },
+                  {
+                    "text" : "Learn about Polymers event driving system",
+                    "isComplete" : false
+                  }
+                ]
+              },
+              {
+                "label" : "CBCS - based feedback system",
+                "isComplete" : false,
+                "items" : [
+                  {
+                    "text" : "Start writing models",
+                    "isComplete" : false, 
+                  },
+                  {
+                    "text" : "Use decorators to assign the tasks",
+                    "isComplete" : false,
+                  },
+                  {
+                    "text" : "Use inline models to wire up the teachers and students.",
+                    "isComplete" : false,
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+    });
+  })();
+  </script>
 </dom-module>

@@ -46,11 +46,13 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         </div>
       </paper-header-panel>
     </template>
+
     <template is="dom-if" if={{!todoExists(todo)}}>
       <paper-header-panel mode="seamed">
         <todo-view-no-todo></todo-view-no-todo>
       </paper-header-panel>
     </template>
+    
   </template>
   <script>
   (function() {

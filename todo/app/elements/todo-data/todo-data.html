@@ -12,10 +12,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 @license
 Copyright (c) 2016 Hemant Jadon. All rights reserved.
 -->
-
+<!-- Polymer and PolymerElements -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+
+
+<!-- Custom Web Components -->
 
 <dom-module id="todo-data">
+  <template>
+
+    <firebase-app auth-domain="todo-app-bc14c.firebaseapp.com"
+      database-url="https://todo-app-bc14c.firebaseio.com"
+      api-key="AIzaSyAW5zGDTcCzFMveybUJlVHugyOE2zH9dLM">
+    </firebase-app>
+
+    <firebase-auth id="auth" user="{{user}}" provider="google" on-error="handleError">
+
+    <firebase-document data={{todos}} path={{userLocation}}></firebase-document>
+  </template>
+
   <script>
   (function() {
     'use strict';
@@ -25,54 +41,39 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 
       properties: {
         todos : {
+          type : Array,
           notify : true,
-          value : function(){
-            return [];
-            return [
-              {
-                "label" : "Learning Polymer",
-                "isComplete" : false,
-                "items" : [
-                  {
-                    "text" : "Start with Polymer Starter Kit",
-                    "isComplete" : true,
-                  },
-                  {
-                    "text" : "Learn about elements",
-                    "isComplete" : false,
-                  },
-                  {
-                    "text" : "Understand Data Bindings",
-                    "isComplete" : false,
-                  },
-                  {
-                    "text" : "Learn about Polymers event driving system",
-                    "isComplete" : false
-                  }
-                ]
-              },
-              {
-                "label" : "CBCS - based feedback system",
-                "isComplete" : false,
-                "items" : [
-                  {
-                    "text" : "Start writing models",
-                    "isComplete" : false, 
-                  },
-                  // {
-                  //   "text" : "Use decorators to assign the tasks",
-                  //   "isComplete" : false,
-                  // },
-                  // {
-                  //   "text" : "Use inline models to wire up the teachers and students.",
-                  //   "isComplete" : false,
-                  // }
-                ]
-              }
-            ]
-          }
+          value : [{__type : "notodo",label:"",items:[]}]
+        },
+        user : {
+          type : Object,
+          notify : true,
+          observer : "_userChanged"
         }
       },
+
+      _userChanged : function(user){
+        if(user) {
+          this.userLocation = [
+            'users',this.user.uid
+          ].join('/');
+        }
+      },
+
+      ready : function(){
+        setInterval(()=>{
+          console.log(this.todos);
+        },2000);
+        this.$.auth.signInWithPopup()
+              .then(function(response) {
+                // successful authentication response here
+                // this.user = response;
+              })
+              .catch(function(error) {
+                // unsuccessful authentication response here
+                // console.log(error);
+              });
+      }
     });
   })();
   </script>

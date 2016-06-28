@@ -37,11 +37,12 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 			 The internal implementation of data fetching may not be known, 
 			 but this data element will still provide data to other elements.
 		 -->
-		<todo-data todos={{todos}}></todo-data>
+		<todo-data todos={{todos}} user={{user}}></todo-data>
 
 
 		<paper-drawer-panel drawer-width="300px" responsive-width="900px">
 			<todos-list-view drawer todos={{todos}} selected-todo={{selectedTodo}}></todos-list-view>
+			<!--<div drawer>{{user}}</div>-->
 			<todo-view main todo={{selectedTodo}}></todo-view>
 		</paper-drawer-panel>
 

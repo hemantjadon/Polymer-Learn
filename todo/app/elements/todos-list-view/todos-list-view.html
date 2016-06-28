@@ -22,6 +22,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 
 <!-- Custom Web components -->
 <link rel="import" href="../todo-list-view-list/todo-list-view-list.html">
+<link rel="import" href="../todo-list-view-add-new/todo-list-view-add-new.html">
 
 
 
@@ -30,9 +31,14 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
     <style>
       :host {
         display: block;
+        position: relative;
       }
       paper-toolbar{
         --paper-toolbar-background : var(--theme-color,#e91e63);
+      }
+      todo-list-view-add-new{
+        position: absolute;
+        bottom: 0;
       }
     </style>
 
@@ -42,10 +48,9 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         <div class="title">Todos</div>
       </paper-toolbar>
       <div class="fit">
-        {{computeLabel(todos.*,selectedIndex)}}<br>
-        {{todos.0.label}}
-        <todo-list-view-list todos={{computeTodos(todos.*)}} selected-index={{selectedIndex}}></todo-list-view-list>
+        <todo-list-view-list todos={{todos}} selected-todo={{selectedTodo}}></todo-list-view-list>
       </div>
+      <todo-list-view-add-new todos={{todos}}></todo-list-view-add-new>
     </paper-header-panel>
 
   </template>
@@ -57,9 +62,8 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       is: 'todos-list-view',
 
       properties: {
-        selectedIndex : {
-          type : Number,
-          value : 0,
+        selectedTodo : {
+          type : Object,
           notify : true
         }
       },
@@ -67,16 +71,6 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         return changeRecord.base;
       },
 
-      listeners : {
-        "todo-changed" : "todoChange",
-      },
-      todoChange : function (evt,label) {
-        this.notifyPath(`todos.${selectedIndex}.label`,"Hemant")
-        this.set(`todos.${selectedIndex}.label`,label.label)
-      },
-      computeLabel : function (todos,index){
-        return this.todos[index].label;
-      }
     });
   })();
   </script>

@@ -40,10 +40,9 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 		<todo-data todos={{todos}}></todo-data>
 
 
-		<paper-drawer-panel drawer-width="300px">
-			<todos-list-view drawer todos={{computeTodos(todos.*)}} selected-index={{selectedIndex}}></todos-list-view>
+		<paper-drawer-panel drawer-width="300px" responsive-width="900px">
+			<todos-list-view drawer todos={{todos}} selected-todo={{selectedTodo}}></todos-list-view>
 			<todo-view main todo={{selectedTodo}}></todo-view>
-			
 		</paper-drawer-panel>
 
 	</template>
@@ -55,26 +54,8 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 			is: 'todo-app',
 
 			properties: {
-				selectedTodo : {
-					type : Object,
-					notify : true,
-					computed : "computeSelectedTodo(todos,selectedIndex)"
-				}
+				
 			},
-
-			computeSelectedTodo : function(todos,selectedIndex){
-				return todos[0];
-			},
-			computeTodos : function(changeRecord){
-				return changeRecord.base;
-			},
-			listeners : {
-       			"todo-changed" : "todoChange"
-     		},
-			
-			todoChange : function (evt,change) {
-				this.notifyPath(`todos.${this.selectedIndex}.label`)
-			}
 		});
 	})();
 	</script>

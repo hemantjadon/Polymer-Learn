@@ -47,7 +47,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
     </style>
     <paper-listbox>
       
-      <template is="dom-repeat" items={{computeTodos(todos.*)}} as="todo">
+      <template is="dom-repeat" items={{todos}} as="todo">
        
         <paper-item class$={{__getPaperItemClass(index)}} on-tap="handleTap">
           {{todo.label}}
@@ -56,6 +56,8 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       </template>
 
     </paper-listbox>
+
+    <array-selector id="selector" items={{todos}} selected-item={{selectedTodo}}></array-selector>
 
   </template>
   <script>
@@ -66,20 +68,31 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       is: 'todo-list-view-list',
 
       properties: {
-        selectedIndex : {
-          type : Number,
-          value : 0,
+        todos : {
+          type : Array,
+          notify : true,
+          observer : "_todosChanged"
+        },
+
+        selectedTodo : {
+          type : Object,
           notify : true
+        },
+        
+        _selectedIndex : {
+          type : Number,
+          observer : "_selectedIndexChanged"
         }
       },
-
-      computeTodos : function(changeRecord){
-        console.log("a")
-        return changeRecord.base;
+      _todosChanged : function (){
+        this._selectedIndex = 0;
+      },
+      _selectedIndexChanged : function(index){
+        this.$.selector.select(this.todos[index]);
       },
 
       __getPaperItemClass : function(index){
-        if(index === this.selectedIndex){
+        if(index === this._selectedIndex){
           return "selected";
         } else {
           return "";
@@ -87,11 +100,11 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       },
 
       handleTap : function(evt){
-        if (evt.model.index === this.selectedIndex){
+        if (evt.model.item === this.selectedTodo){
           return;
         }
         else{
-          this.selectedIndex = evt.model.index;
+          this._selectedIndex = evt.model.index;
           
           let items = this.querySelectorAll("paper-listbox paper-item");
           items.forEach((item)=>{

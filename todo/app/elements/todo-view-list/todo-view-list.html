@@ -36,11 +36,12 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       div.container div.inner-container{
         color: #bdbdbd;
         display: flex;
+        padding: 20px;
         justify-content: space-between;
         align-items: center;
       }
       div.container div.inner-container div.label div{
-        padding: 10px 20px;
+        display: inline;
         font-size: 2em;
       }
       div.container div.inner-container div.label div.hidden{
@@ -50,6 +51,14 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         .show-on-mobile{
           display: none;
         }
+      }
+      @media(max-width : 899px){
+        div.container{
+          padding: 50px 20px;
+        }
+        div.container div.inner-container div.label div{
+          font-size: 1.5em;
+        }   
       }
     </style>
 
@@ -63,12 +72,14 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
             You're all caught up
           </div>
           <div class$={{__noTodoCompleteHiddenClass(todo.items.*)}}>
-            You have some work to do
+            You have work to do <br class="show-on-mobile" />
           </div>
           <div class$={{__incompleteTodoHiddenClass(todo.items.*)}}>
+            (
             <span class="completed">{{completedArrayLength(todo.items.*)}}</span>
             /
             <span class="all">{{arrayLength(todo.items.*)}}</span>
+            )
           </div>
         </div>
         <div class="delete-button">
@@ -142,7 +153,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
           return "hidden";
         }
         else if(this.completedArrayLength(changeRecord)){
-          return "hidden";
+          // return "hidden";
         }
       },
     });

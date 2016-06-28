@@ -54,6 +54,9 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         <div class$={{__completeTodoHiddenClass(todo.items.*)}}>
           You're all caught up
         </div>
+        <div class$={{__noTodoCompleteHiddenClass(todo.items.*)}}>
+          You have some work to do
+        </div>
         <div class$={{__incompleteTodoHiddenClass(todo.items.*)}}>
           <span class="completed">{{completedArrayLength(todo.items.*)}}</span>
           /
@@ -110,7 +113,18 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         if(!changeRecord.base.length){
           return "hidden";
         }
+        else if(this.completedArrayLength(changeRecord) === 0){
+          return "hidden"
+        }
         else if(this.completedArrayLength(changeRecord) === changeRecord.base.length){
+          return "hidden";
+        }
+      },
+      __noTodoCompleteHiddenClass : function(changeRecord){
+        if(!changeRecord.base.length){
+          return "hidden";
+        }
+        else if(this.completedArrayLength(changeRecord)){
           return "hidden";
         }
       },

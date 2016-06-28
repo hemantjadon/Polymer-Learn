@@ -14,6 +14,9 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 
 <!-- Polymer and PolymerElements -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
+
 
 <!-- Custom Web Components -->
 <link rel="import" href="../todo-view-list-item/todo-view-list-item.html">
@@ -30,12 +33,17 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         padding: 70px 20px;
         padding-bottom: 50px;
       }
-      div.container div.label div{
+      div.container div.inner-container{
+        color: #bdbdbd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      div.container div.inner-container div.label div{
         padding: 10px 20px;
         font-size: 2em;
-        color: #bdbdbd;
       }
-      div.container div.label div.hidden{
+      div.container div.inner-container div.label div.hidden{
         display: none;
       }
       @media(min-width:900px){
@@ -46,20 +54,26 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
     </style>
 
     <div class="container">
-      <div class="label">
-        <div class$={{__noTodoHiddenClass(todo.items.*)}}>
-          No More Todos! <br class="show-on-mobile"/> You're all caught up
+      <div class="inner-container">
+        <div class="label">
+          <div class$={{__noTodoHiddenClass(todo.items.*)}}>
+            No More Todos! <br class="show-on-mobile"/> You're all caught up
+          </div>
+          <div class$={{__completeTodoHiddenClass(todo.items.*)}}>
+            You're all caught up
+          </div>
+          <div class$={{__noTodoCompleteHiddenClass(todo.items.*)}}>
+            You have some work to do
+          </div>
+          <div class$={{__incompleteTodoHiddenClass(todo.items.*)}}>
+            <span class="completed">{{completedArrayLength(todo.items.*)}}</span>
+            /
+            <span class="all">{{arrayLength(todo.items.*)}}</span>
+          </div>
         </div>
-        <div class$={{__completeTodoHiddenClass(todo.items.*)}}>
-          You're all caught up
-        </div>
-        <div class$={{__noTodoCompleteHiddenClass(todo.items.*)}}>
-          You have some work to do
-        </div>
-        <div class$={{__incompleteTodoHiddenClass(todo.items.*)}}>
-          <span class="completed">{{completedArrayLength(todo.items.*)}}</span>
-          /
-          <span class="all">{{arrayLength(todo.items.*)}}</span>
+        <div class="delete-button">
+          <paper-icon-button id="delete-todo" icon="cancel" on-tap="handleDelete"></paper-icon-button>
+          <paper-tooltip for="delete-todo" position="left">Delete Todo</paper-tooltip>
         </div>
       </div>
       <template is="dom-repeat" items={{todo.items}}>
@@ -92,6 +106,10 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
           }
         });
         return completedLength;
+      },
+
+      handleDelete : function (evt){
+        this.fire("delete-todo",this.todo);
       },
 
       // Class Getting Methods.

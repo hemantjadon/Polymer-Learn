@@ -49,7 +49,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       
       <template is="dom-repeat" items={{todos}} as="todo">
        
-        <paper-item class$={{__getPaperItemClass(index)}} on-tap="handleTap">
+        <paper-item class$={{__getPaperItemClass(todos.*,index)}} on-tap="handleTap">
           {{todo.label}}
         </paper-item>
 
@@ -91,7 +91,8 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         this.$.selector.select(this.todos[index]);
       },
 
-      __getPaperItemClass : function(index){
+      __getPaperItemClass : function(todos,index){
+        console.log(todos,index,this._selectedIndex);
         if(index === this._selectedIndex){
           return "selected";
         } else {

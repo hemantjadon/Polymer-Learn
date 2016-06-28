@@ -56,6 +56,21 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
 			properties: {
 				
 			},
+
+			listeners : {
+				"delete-todo" : "deleteTodo",
+			},
+
+			deleteTodo : function(evt,item){
+				let selector = this.querySelectorAll('todos-list-view #selector')[0];
+				let index =  this.querySelectorAll('todos-list-view todo-list-view-list')[0]._selectedIndex;
+				this.querySelectorAll('todos-list-view todo-list-view-list')[0]._selectedIndex = 0;
+				this.splice('todos',index,1);
+				index = 0;
+				if(this.todos.length) {
+					selector.select(this.todos[index]);
+				}
+			},
 		});
 	})();
 	</script>

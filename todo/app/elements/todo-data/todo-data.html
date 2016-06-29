@@ -43,14 +43,33 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
         todos : {
           type : Array,
           notify : true,
-          value : [{__type : "notodo",label:"",items:[]}]
+          // observer : "_todosChanged"
+          // computed : "getTodos(todosObject)"
+          /*value : function(){
+            // return undefined;
+            // return [];
+            return [
+              {
+                label : "Learning Polymer",
+                isComplete : false,
+                items : [
+                  {"text" : "Start Polymer"}
+                ]
+              }
+            ]
+          }*/
         },
+
         user : {
           type : Object,
           notify : true,
           observer : "_userChanged"
         }
       },
+
+        _todosChanged : function(){
+          console.log(this.todos);
+        },
 
       _userChanged : function(user){
         if(user) {
@@ -61,17 +80,20 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       },
 
       ready : function(){
-        setInterval(()=>{
-          console.log(this.todos);
-        },2000);
         this.$.auth.signInWithPopup()
-              .then(function(response) {
+              .then((response) => {
                 // successful authentication response here
-                // this.user = response;
+                var database = firebase.database();
+                var ref = database.ref(this.userLication);
+                ref.push({text:"hello",isComplete : false});
+                ref.on('value',(snapshot) => {
+                  console.log(snapshot);
+                });
+
               })
               .catch(function(error) {
                 // unsuccessful authentication response here
-                // console.log(error);
+                console.log(error);
               });
       }
     });

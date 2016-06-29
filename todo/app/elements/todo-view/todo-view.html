@@ -37,7 +37,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       }
     </style>
 
-    <template is="dom-if" if={{todoExists(todo)}}>
+    <template is="dom-if" if={{todo}}>
       <paper-header-panel mode="seamed">
         <todo-view-header class="paper-header" label={{todo.label}}></todo-view-header>
         <div class="fit">
@@ -47,7 +47,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       </paper-header-panel>
     </template>
 
-    <template is="dom-if" if={{!todoExists(todo)}}>
+    <template is="dom-if" if={{!todo}}>
       <paper-header-panel mode="seamed">
         <todo-view-no-todo></todo-view-no-todo>
       </paper-header-panel>
@@ -74,7 +74,7 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       },
 
       todoExists : function(todo){
-        if(todo.__type === "notodo"){
+        if(!todo){
           return false;
         }
         else {

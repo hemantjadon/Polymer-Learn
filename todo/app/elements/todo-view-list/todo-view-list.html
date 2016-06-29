@@ -109,7 +109,11 @@ Copyright (c) 2016 Hemant Jadon. All rights reserved.
       },
 
       computeLabel : function(changeRecord){
-        if(changeRecord.base.length === 0){
+        console.log(changeRecord);
+        if(!changeRecord.base){
+          return "";
+        }
+        else if(changeRecord.base.length === 0){
           return "No todos left! You're all caught up";
         }
         else if(this.completedArrayLength(changeRecord) === this.arrayLength(changeRecord)){
